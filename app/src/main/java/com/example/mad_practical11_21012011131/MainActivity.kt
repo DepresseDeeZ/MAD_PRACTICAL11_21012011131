@@ -3,11 +3,11 @@ package com.example.mad_practical11_21012011131
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView import com.example.mad_practical11_21012011118.HttpRequest
-import com.example.mad_practical11_21012011118.Person
-import com.example.mad_practical11_21012011118.PersonAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,9 +19,15 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView : RecyclerView
+    lateinit var databaseHelper: DatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        databaseHelper = DatabaseHelper(this)
+        var toolBar : Toolbar = findViewById(R.id.toolbar)
+
+        setSupportActionBar(toolBar)
 
         val fetchBtn : FloatingActionButton = findViewById(R.id.fetchButton)
 
@@ -53,13 +59,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu) // Assuming your menu XML file is named "menu.xml"
+        menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_button1 -> {
+                Toast.makeText(this@MainActivity, "Clicked on item at menu!", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.action_button2 -> {
+                var personList: ArrayList<Person> = databaseHelper.getAllPersons()
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                recyclerView.adapter = PersonAdapter(this, personList)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun getPersonDetailsFromJson(sJson: String?)
     {
@@ -73,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 personList.add(person)
             }
             recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = PersonAdapter(this, personList)
+            recyclerView.adapter =PersonAdapter(this, personList)
         }
         catch (e: JSONException)
         {

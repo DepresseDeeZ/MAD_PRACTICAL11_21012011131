@@ -38,28 +38,27 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="Raval Umang"/>
+                    android:text="Guerra Rodgers"/>
 
                 <TextView
                     android:id="@+id/txt_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="+91 8160909341"/>
+                    android:text="+919289635723"/>
 
                 <TextView
                     android:id="@+id/txt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="umangraval0365@gmail.com"/>
+                    android:text="guerra_rodgers@gnu.ac.in"/>
 
                 <TextView
                     android:id="@+id/txt_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="F-201 Himalaya Royal Flat\nopp wide angle cinema
-                \nNear nagalpur\nMehesana 384002"
+                    android:text="88 College Place, Umapine, Oregon"
                     android:textSize="14sp" />
             </LinearLayout>
 

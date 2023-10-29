@@ -1,4 +1,4 @@
-package com.example.mad_practical11_21012011118
+package com.example.mad_practical11_21012011131
 
 import android.content.Context
 import android.content.Intent
@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mad_practical11_21012011131.MapsActivity
-import com.example.mad_practical11_21012011131.R
 import java.io.Serializable
 
 class PersonAdapter(private val context: Context, private val array: ArrayList<Person>): RecyclerView.Adapter<PersonAdapter.PersonViewHolder>(){
     lateinit var databaseHelper: DatabaseHelper
+    init {
+        // Initialize the databaseHelper here
+        databaseHelper = DatabaseHelper(context)
+    }
     inner class PersonViewHolder(val itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val nameTxt : TextView = itemView.findViewById(R.id.txt_name)
@@ -44,6 +47,8 @@ class PersonAdapter(private val context: Context, private val array: ArrayList<P
 
         val obj = person as Serializable
 
+        databaseHelper.insertPerson(person)
+
         holder.mapBtn.setOnClickListener {
             Intent(this@PersonAdapter.context, MapsActivity::class.java).apply {
                 putExtra("Object",obj)
@@ -52,7 +57,13 @@ class PersonAdapter(private val context: Context, private val array: ArrayList<P
         }
 
         holder.deleteBtn.setOnClickListener {
-            databaseHelper
+            var count = databaseHelper.deletePerson(person.Id)
+            if(count > 0)
+            {
+                Toast.makeText(this.context, "${person.Name}'s details deleted successfully!", Toast.LENGTH_SHORT).show()
+                array.removeAt(position)
+                notifyDataSetChanged()
+            }
         }
     }
 }
