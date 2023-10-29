@@ -2,9 +2,10 @@ package com.example.mad_practical11_21012011131
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mad_practical11_21012011118.HttpRequest
+import androidx.recyclerview.widget.RecyclerView import com.example.mad_practical11_21012011118.HttpRequest
 import com.example.mad_practical11_21012011118.Person
 import com.example.mad_practical11_21012011118.PersonAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,6 +52,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu) // Assuming your menu XML file is named "menu.xml"
+        return true
     }
 
 
